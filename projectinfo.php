@@ -336,6 +336,12 @@
                 $result = $action->fetchAll(PDO::FETCH_ASSOC);
                 print json_encode($result);
             break;
+            case 'read_apexresource':
+                $action = $conn->prepare('SELECT tasklists, value, id_task  FROM tasklist t JOIN tableau_action a ON t.id=a.id_task WHERE t.id_projet = :id_p AND a.qqoqcpc IN ("qandD", "quandF")');
+                $action->execute(array(':id_p' => $_POST['id_p']));
+                $result = $action->fetchAll(PDO::FETCH_ASSOC);
+                print json_encode($result);
+            break;
             
             
         };
