@@ -299,11 +299,16 @@
                 print json_encode($result);
             break;
             case'create_tableauaction':
-                $action=$conn->prepare('INSERT INTO tableau_action (qqoqcpc,value,id_projet,id_task)VALUES (:qqoqcpc,:value,:id_projet,:id_task) ');
-                $action->bindParam(':qqoqcpc',$_POST['qqoqcpc']);
-                $action->bindParam(':value',$_POST['value']);
+                $action=$conn->prepare('INSERT INTO tableau_action (id_projet,id_task,qui,ou,quandD,quandF,comment,pourquoi,combien)VALUES (:id_projet,:id_task,:qui,:ou,:quandD,:quandF,:comment,:pourquoi,:combien) ');
                 $action->bindParam(':id_task',$_POST['id_t']);
                 $action->bindParam(':id_projet',$_POST['id_projet']);
+                $action->bindParam(':qui',$_POST['qui']);
+                $action->bindParam(':ou',$_POST['ou']);
+                $action->bindParam(':quandD',$_POST['quandD']);
+                $action->bindParam(':quandF',$_POST['quandF']);
+                $action->bindParam(':comment',$_POST['comment']);
+                $action->bindParam(':pourquoi',$_POST['pourquoi']);
+                $action->bindParam(':combien',$_POST['combien']);
                 $action->execute();
                 print json_encode(['Enregistre' => true]);
             break;
@@ -314,13 +319,14 @@
                 print json_encode($result);
             break;
             case'create_priorite':
-                $action=$conn->prepare('INSERT INTO tableau_priorite (id_projet, task_id, action, value, priorite,statut)VALUES (:id_projet, :task_id, :action, :value, :priorite,:statut) ');
+                $action=$conn->prepare('INSERT INTO tableau_priorite (id_projet, task_id, urgent, important, priorite,statut, delai)VALUES (:id_projet, :task_id, :urgent, :important, :priorite,:statut, :delai) ');
                 $action->bindParam(':id_projet',$_POST['id_projet']);
                 $action->bindParam(':task_id',$_POST['task_id']);
-                $action->bindParam(':action',$_POST['action']);
+                $action->bindParam(':urgent',$_POST['urgent']);
+                $action->bindParam(':important',$_POST['important']);
                 $action->bindParam(':priorite',$_POST['priorite']);
                 $action->bindParam(':statut',$_POST['statut']);
-                $action->bindParam(':value',$_POST['value']);
+                $action->bindParam(':delai',$_POST['delai']);
                 $action->execute();
                 print json_encode(['Enregistre' => true]);
             break;
@@ -337,7 +343,7 @@
                 print json_encode($result);
             break;
             case 'read_apexresource':
-                $action = $conn->prepare('SELECT tasklists, value, id_task  FROM tasklist t JOIN tableau_action a ON t.id=a.id_task WHERE t.id_projet = :id_p AND a.qqoqcpc IN ("qandD", "quandF")');
+                $action = $conn->prepare('SELECT tasklists, quandD, quandF, id_task  FROM tasklist t JOIN tableau_action a ON t.id=a.id_task WHERE t.id_projet = :id_p');
                 $action->execute(array(':id_p' => $_POST['id_p']));
                 $result = $action->fetchAll(PDO::FETCH_ASSOC);
                 print json_encode($result);
