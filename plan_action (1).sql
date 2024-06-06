@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:3306
--- Généré le : jeu. 23 mai 2024 à 16:01
+-- Généré le : jeu. 06 juin 2024 à 15:43
 -- Version du serveur : 8.0.30
 -- Version de PHP : 8.1.10
 
@@ -60,10 +60,18 @@ INSERT INTO `humanresource` (`id`, `lastname`, `firstname`, `email`, `phonenumbe
 (38, 'Da', 'Ali', 'a@ecodev.dev', '6020324', 104),
 (39, 'Da', 'Kathérine', 'a@ecodev.dev', '6020324', 104),
 (46, 'Da', 'Kathérine', 'a@ecodev.dev', '6020324', 114),
-(47, 'Da', 'Kathérine', 'wanematou.vebama@ecodev.dev', '56523541', 114),
-(48, 'Da', 'wane', 'a@ecodev.dev', '6020324', 114),
-(49, 'Da', 'Kathérine', 'a@ecodev.dev', '6020324', 114),
-(50, 'Da', 'Wanematou aida', 'a@ecodev.dev', '56523541', 114);
+(47, 'Maiga', 'Celine', 'wanematou.vebama@ecodev.dev', '56523541', 114),
+(48, 'Zabre', 'Edith', 'a@ecodev.dev', '6020324', 114),
+(49, 'Traoré', 'Emi', 'a@ecodev.dev', '6020324', 114),
+(50, 'So', 'Julie', 'a@ecodev.dev', '56523541', 114),
+(51, 'cocti', 'Sonia', 'a@ecodev.dev', '6020324', 114),
+(52, 'cocti', 'Kathérine', 'wanematou.vebama@ecodev.dev', '6020324', 114),
+(53, 'ada', 'Kathérine', 'a@ecodev.dev', '6020324', 114),
+(54, 'Traoré', 'Ali', 'a@ecodev.dev', '6020324', 114),
+(55, 'Traoré', 'Kathérine', 'a@ecodev.dev', '6020324', 114),
+(56, 'cocti', 'nafi', 'wanematou.vebama@ecodev.dev', '6020324', 114),
+(57, 'cocti', 'Nema', 'a@ecodev.dev', '6020324', 114),
+(58, 'Traoré', 'wane', 'a@ecodev.dev', '6020324', 114);
 
 -- --------------------------------------------------------
 
@@ -119,7 +127,8 @@ INSERT INTO `objective` (`id`, `objectives`, `types`, `id_projet`) VALUES
 (81, 'publié', 'specificobjective', 114),
 (82, 'lin', 'qualityobjective', 114),
 (83, '25000', 'costobjective', 114),
-(84, '25/12/2025', 'delayobjective', 114);
+(84, '25/12/2025', 'delayobjective', 114),
+(85, 'Grandir', 'specificobjective', 114);
 
 -- --------------------------------------------------------
 
@@ -146,7 +155,13 @@ INSERT INTO `plus` (`id`, `sigle`, `signification`, `id_projet`, `author`) VALUE
 (55, 'E', 'Executer', NULL, 'codeur'),
 (56, 'F', 'Fournir', NULL, 'codeur'),
 (57, 'P', 'Participer', NULL, 'codeur'),
-(58, '-', 'Non concerné', NULL, 'codeur');
+(58, '-', 'Non concerné', NULL, 'codeur'),
+(60, 'p', 'papa', NULL, NULL),
+(62, 'G', 'papa', NULL, NULL),
+(63, 'p', 'papa', NULL, NULL),
+(65, 'G', 'geriatre', 114, NULL),
+(68, 'A', 'Approuver', 114, NULL),
+(69, 'F', 'Fati', 114, NULL);
 
 -- --------------------------------------------------------
 
@@ -300,7 +315,39 @@ INSERT INTO `selectplus` (`id`, `id_projet`, `id_actor`, `id_task`, `choice`) VA
 (180, 114, 48, 39, '-'),
 (181, 114, 49, 39, 'E'),
 (182, 114, 47, 40, 'C'),
-(183, 114, 48, 40, 'F');
+(183, 114, 48, 40, 'F'),
+(184, 114, 47, 39, '-'),
+(185, 114, 47, 38, 'F'),
+(186, 114, 46, 40, 'C'),
+(187, 114, 46, 38, 'I'),
+(188, 114, 46, 42, 'F'),
+(189, 114, 46, 43, '-'),
+(190, 114, 47, 39, 'I'),
+(191, 114, 47, 42, 'C'),
+(192, 114, 47, 43, 'E'),
+(193, 114, 48, 38, '-'),
+(194, 114, 48, 42, 'I'),
+(195, 114, 48, 43, 'I'),
+(196, 114, 49, 38, '-'),
+(197, 114, 49, 40, '-'),
+(198, 114, 49, 42, '-'),
+(199, 114, 49, 43, '-'),
+(200, 114, 50, 38, 'C'),
+(201, 114, 50, 39, 'A'),
+(202, 114, 50, 40, 'I'),
+(203, 114, 50, 42, 'F'),
+(204, 114, 50, 43, 'P'),
+(205, 114, 46, 38, 'C'),
+(206, 114, 46, 38, 'P'),
+(207, 114, 46, 38, 'A'),
+(208, 114, 46, 38, '-'),
+(209, 114, 46, 38, 'P'),
+(210, 114, 51, 38, 'I'),
+(211, 114, 46, 44, 'I'),
+(212, 114, 47, 44, '-'),
+(213, 114, 46, 38, 'A'),
+(214, 114, 46, 50, 'C'),
+(215, 114, 47, 50, 'G');
 
 -- --------------------------------------------------------
 
@@ -311,13 +358,16 @@ INSERT INTO `selectplus` (`id`, `id_projet`, `id_actor`, `id_task`, `choice`) VA
 CREATE TABLE `tableau_action` (
   `id` int NOT NULL,
   `id_projet` int NOT NULL,
+  `project` text NOT NULL,
+  `task` text NOT NULL,
   `id_task` int NOT NULL,
-  `qui` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `ou` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `qui` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `email` text NOT NULL,
+  `ou` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   `quandD` varchar(50) DEFAULT NULL,
   `quandF` varchar(50) DEFAULT NULL,
-  `comment` varchar(50) DEFAULT NULL,
-  `pourquoi` varchar(50) DEFAULT NULL,
+  `comment` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `pourquoi` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   `combien` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -325,34 +375,8 @@ CREATE TABLE `tableau_action` (
 -- Déchargement des données de la table `tableau_action`
 --
 
-INSERT INTO `tableau_action` (`id`, `id_projet`, `id_task`, `qui`, `ou`, `quandD`, `quandF`, `comment`, `pourquoi`, `combien`) VALUES
-(4535, 114, 38, 'wane Da', 'undefined', 'undefined', 'undefined', 'undefined', 'undefined', 'undefined'),
-(4536, 114, 38, 'wane Da', 'Mali', 'undefined', 'undefined', '', '', ''),
-(4537, 114, 38, 'wane Da', 'Mali', '2024-05-24', 'undefined', '', '', ''),
-(4538, 114, 38, 'wane Da', 'Mali', '2024-05-24', '2024-05-25', '', '', ''),
-(4539, 114, 38, 'wane Da', 'Mali', '2024-05-24', '2024-05-25', 'Car', '', ''),
-(4540, 114, 38, 'wane Da', 'Mali', '2024-05-24', '2024-05-25', 'Car', 'vendre', ''),
-(4541, 114, 38, 'wane Da', 'Mali', '2024-05-24', '2024-05-25', 'Car', 'vendre', '11000'),
-(4542, 114, 39, 'Kathérine Da', 'undefined', 'undefined', 'undefined', 'undefined', 'undefined', 'undefined'),
-(4543, 114, 39, 'Kathérine Da', 'Niger', 'undefined', 'undefined', '', '', ''),
-(4544, 114, 39, 'Kathérine Da', 'Niger', '2024-05-01', 'undefined', '', '', ''),
-(4545, 114, 39, 'Kathérine Da', 'Niger', '2024-05-01', '2024-05-24', '', '', ''),
-(4546, 114, 39, 'Kathérine Da', 'Niger', '2024-05-01', '2024-05-24', 'Bus', '', ''),
-(4547, 114, 39, 'Kathérine Da', 'Niger', '2024-05-01', '2024-05-24', 'Bus', 'Prospecter', ''),
-(4548, 114, 39, 'Kathérine Da', 'Niger', '2024-05-01', '2024-05-24', 'Bus', 'Prospecter', '5000'),
-(4549, 114, 40, 'Kathérine Da', 'undefined', 'undefined', 'undefined', 'undefined', 'undefined', 'undefined'),
-(4550, 114, 40, 'Kathérine Da', 'Bobo', 'undefined', 'undefined', '', '', ''),
-(4551, 114, 40, 'Kathérine Da', 'Bobo', '2024-04-30', 'undefined', '', '', ''),
-(4552, 114, 40, 'Kathérine Da', 'Bobo', '2024-04-30', '2024-05-25', '', '', ''),
-(4553, 114, 40, 'Kathérine Da', 'Bobo', '2024-04-30', '2024-05-25', 'Avion', '', ''),
-(4554, 114, 40, 'Kathérine Da', 'Bobo', '2024-04-30', '2024-05-25', 'Avion', 'vendre', ''),
-(4555, 114, 40, 'Kathérine Da', 'Bobo', '2024-04-30', '2024-05-25', 'Avion', 'vendre', '10000'),
-(4556, 114, 40, 'Kathérine Da', 'Bobo', '2024-05-10', '2024-05-25', 'Avion', 'vendre', '10000'),
-(4557, 114, 39, 'Kathérine Da', 'Niger', '2024-05-17', '2024-05-24', 'Bus', 'Prospecter', '5000'),
-(4558, 114, 40, 'Kathérine Da', 'Bobo', '2024-05-10', '2024-05-16', 'Avion', 'vendre', '10000'),
-(4559, 114, 38, 'wane Da', 'Mali', '2024-05-24', '2024-05-31', 'Car', 'vendre', '11000'),
-(4560, 114, 42, 'Kathérine Da', 'undefined', 'undefined', 'undefined', 'undefined', 'undefined', 'undefined'),
-(4561, 114, 42, 'wane Da', '', 'undefined', 'undefined', '', '', '');
+INSERT INTO `tableau_action` (`id`, `id_projet`, `project`, `task`, `id_task`, `qui`, `email`, `ou`, `quandD`, `quandF`, `comment`, `pourquoi`, `combien`) VALUES
+(5514, 114, 'Colorier', 'Ketsia collection', 53, 'Celine Maiga', 'wanematou.vebama@ecodev.dev', 'Dori', '2024-05-30', '2024-06-07', 'Dori', 'Dori', 'Dori');
 
 -- --------------------------------------------------------
 
@@ -367,28 +391,58 @@ CREATE TABLE `tableau_priorite` (
   `urgent` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `important` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `priorite` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `statut` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `delai` varchar(100) DEFAULT NULL
+  `statut` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `tableau_priorite`
 --
 
-INSERT INTO `tableau_priorite` (`id`, `id_projet`, `task_id`, `urgent`, `important`, `priorite`, `statut`, `delai`) VALUES
-(285, 114, 38, 'urgent', 'undefined', NULL, NULL, 'undefined'),
-(286, 114, 38, 'urgent', 'important', NULL, NULL, 'undefined'),
-(287, 114, 38, 'urgent', 'important', NULL, NULL, '2024-05-02'),
-(288, 114, 39, 'urgent', 'undefined', 'undefined', NULL, 'undefined'),
-(289, 114, 39, 'urgent', 'important', '', NULL, 'undefined'),
-(290, 114, 40, 'urgent', 'undefined', 'undefined', NULL, 'undefined'),
-(291, 114, 40, 'urgent', 'pas_important ', '', NULL, 'undefined'),
-(292, 114, 42, 'pas_urgent ', 'undefined', 'undefined', NULL, 'undefined'),
-(293, 114, 42, 'pas_urgent ', 'important', '', NULL, 'undefined'),
-(294, 114, 43, 'urgent', 'undefined', 'undefined', NULL, 'undefined'),
-(295, 114, 43, 'urgent', 'important', '', NULL, 'undefined'),
-(296, 114, 40, 'urgent', 'important', '', NULL, 'undefined'),
-(297, 114, 38, 'urgent', 'pas_important ', 'X', NULL, '2024-05-02');
+INSERT INTO `tableau_priorite` (`id`, `id_projet`, `task_id`, `urgent`, `important`, `priorite`, `statut`) VALUES
+(285, 114, 38, 'urgent', 'undefined', NULL, NULL),
+(286, 114, 38, 'urgent', 'important', NULL, NULL),
+(287, 114, 38, 'urgent', 'important', NULL, NULL),
+(288, 114, 39, 'urgent', 'undefined', 'undefined', NULL),
+(289, 114, 39, 'urgent', 'important', '', NULL),
+(290, 114, 40, 'urgent', 'undefined', 'undefined', NULL),
+(291, 114, 40, 'urgent', 'pas_important ', '', NULL),
+(292, 114, 42, 'pas_urgent ', 'undefined', 'undefined', NULL),
+(293, 114, 42, 'pas_urgent ', 'important', '', NULL),
+(294, 114, 43, 'urgent', 'undefined', 'undefined', NULL),
+(295, 114, 43, 'urgent', 'important', '', NULL),
+(296, 114, 40, 'urgent', 'important', '', NULL),
+(297, 114, 38, 'urgent', 'pas_important ', 'X', NULL),
+(298, 114, 39, 'pas_urgent ', 'important', 'X', NULL),
+(299, 114, 38, 'urgent', 'important', '', NULL),
+(300, 114, 39, 'pas_urgent ', 'important', '', NULL),
+(301, 114, 40, 'urgent', 'important', 'X', NULL),
+(302, 114, 42, 'pas_urgent ', 'important', '', NULL),
+(303, 114, 43, 'urgent', 'important', 'X', NULL),
+(304, 114, 38, 'urgent', 'pas_important ', 'X', NULL),
+(305, 114, 39, 'pas_urgent ', 'pas_important ', '', NULL),
+(306, 114, 40, 'pas_urgent ', 'important', 'X', NULL),
+(307, 114, 40, 'pas_urgent ', 'pas_important ', '', NULL),
+(308, 114, 42, 'urgent', 'important', '', NULL),
+(309, 114, 42, 'pas_urgent ', 'important', 'X', NULL),
+(310, 114, 42, 'pas_urgent ', 'pas_important ', '', NULL),
+(311, 114, 42, 'pas_urgent ', 'important', '', NULL),
+(312, 114, 40, 'pas_urgent ', 'important', '', NULL),
+(313, 114, 39, 'urgent', 'pas_important ', '', NULL),
+(314, 114, 39, 'urgent', 'important', '', NULL),
+(315, 114, 38, 'urgent', 'important', '', NULL),
+(316, 114, 50, 'urgent', 'undefined', 'undefined', NULL),
+(317, 114, 50, 'urgent', 'important', '', NULL),
+(318, 114, 50, 'urgent', 'pas_important ', 'X', NULL),
+(319, 114, 51, 'pas_urgent ', 'undefined', 'undefined', NULL),
+(320, 114, 51, 'pas_urgent ', 'pas_important ', '', NULL),
+(321, 114, 51, 'pas_urgent ', 'important', '', NULL),
+(322, 114, 51, 'urgent', 'important', '', NULL),
+(323, 114, 50, 'urgent', 'undefined', 'undefined', NULL),
+(324, 114, 51, 'urgent', 'pas_important ', 'X', NULL),
+(325, 114, 52, 'urgent', 'undefined', 'undefined', NULL),
+(326, 114, 52, 'urgent', 'pas_important ', '', NULL),
+(327, 114, 50, 'urgent', 'pas_important ', '', NULL),
+(328, 114, 50, 'urgent', 'important', '', NULL);
 
 -- --------------------------------------------------------
 
@@ -407,18 +461,11 @@ CREATE TABLE `tasklist` (
 --
 
 INSERT INTO `tasklist` (`id`, `tasklists`, `id_projet`) VALUES
-(31, 'recruter', 104),
-(32, 'codre', 104),
-(33, 'vendre', 104),
-(34, 'faire du profit', 104),
-(35, 'grandir', 104),
-(36, 's\'étendre', 104),
-(37, '', 104),
-(38, 'coudre', 114),
-(39, 'vendre', 114),
-(40, 'publié', 114),
-(42, 'barrer', 114),
-(43, 'zazer', 114);
+(50, 'Produire', 114),
+(51, 'coudre', 114),
+(52, 'Vendre', 114),
+(53, 'Colorier', 114),
+(55, 'vendre', 114);
 
 --
 -- Index pour les tables déchargées
@@ -487,19 +534,19 @@ ALTER TABLE `tasklist`
 -- AUTO_INCREMENT pour la table `humanresource`
 --
 ALTER TABLE `humanresource`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT pour la table `objective`
 --
 ALTER TABLE `objective`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
 
 --
 -- AUTO_INCREMENT pour la table `plus`
 --
 ALTER TABLE `plus`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
 -- AUTO_INCREMENT pour la table `projectname`
@@ -511,25 +558,25 @@ ALTER TABLE `projectname`
 -- AUTO_INCREMENT pour la table `selectplus`
 --
 ALTER TABLE `selectplus`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=184;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=216;
 
 --
 -- AUTO_INCREMENT pour la table `tableau_action`
 --
 ALTER TABLE `tableau_action`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4562;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5515;
 
 --
 -- AUTO_INCREMENT pour la table `tableau_priorite`
 --
 ALTER TABLE `tableau_priorite`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=298;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=329;
 
 --
 -- AUTO_INCREMENT pour la table `tasklist`
 --
 ALTER TABLE `tasklist`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- Contraintes pour les tables déchargées

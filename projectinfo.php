@@ -262,6 +262,18 @@
                 print json_encode(['Enregistre' => true]);
             break;
             case'read-plus':
+                $plus=$conn->prepare("SELECT * FROM plus WHERE author= :codeur");
+                $plus->execute(array(':codeur' => 'codeur'));
+                $plus=$plus-> fetchAll(PDO::FETCH_ASSOC);
+                print json_encode($plus);
+            break;
+            case'read-pluss':
+                $plus=$conn->prepare("SELECT * FROM plus WHERE id_projet=:id");
+                $plus->execute(array(':id' => $_POST['id_projet']));
+                $plus=$plus-> fetchAll(PDO::FETCH_ASSOC);
+                print json_encode($plus);
+            break;
+            case'read-plusss':
                 $plus=$conn->prepare("SELECT * FROM plus WHERE author='codeur' OR id_projet=:id");
                 $plus->execute(array(':id' => $_POST['id_projet']));
                 $plus=$plus-> fetchAll(PDO::FETCH_ASSOC);
@@ -299,10 +311,13 @@
                 print json_encode($result);
             break;
             case'create_tableauaction':
-                $action=$conn->prepare('INSERT INTO tableau_action (id_projet,id_task,qui,ou,quandD,quandF,comment,pourquoi,combien)VALUES (:id_projet,:id_task,:qui,:ou,:quandD,:quandF,:comment,:pourquoi,:combien) ');
+                $action=$conn->prepare('INSERT INTO tableau_action (id_projet,id_task,project,task,qui,email,ou,quandD,quandF,comment,pourquoi,combien)VALUES (:id_projet,:id_task,:project,:task, :qui,:email,:ou,:quandD,:quandF,:comment,:pourquoi,:combien) ');
                 $action->bindParam(':id_task',$_POST['id_t']);
                 $action->bindParam(':id_projet',$_POST['id_projet']);
+                $action->bindParam(':project',$_POST['project']);
+                $action->bindParam(':task',$_POST['task']);
                 $action->bindParam(':qui',$_POST['qui']);
+                $action->bindParam(':email',$_POST['email']);
                 $action->bindParam(':ou',$_POST['ou']);
                 $action->bindParam(':quandD',$_POST['quandD']);
                 $action->bindParam(':quandF',$_POST['quandF']);
@@ -318,15 +333,35 @@
                 $result = $action->fetchAll(PDO::FETCH_ASSOC);
                 print json_encode($result);
             break;
+            case'update_tableauaction':
+                $plus= $conn->prepare('UPDATE tableau_action SET qui=:qui, email=:email, ou=:ou, quandD=:quandD, quandF=:quandF, comment=:comment, pourquoi=:pourquoi, combien=:combien WHERE id=:id');
+                $plus->bindParam(':id',$_POST['id']);
+                $plus->bindParam(':qui',$_POST['qui']);
+                $plus->bindParam(':email',$_POST['email']);
+                $plus->bindParam(':ou',$_POST['ou']);
+                $plus->bindParam(':quandD',$_POST['quandD']);
+                $plus->bindParam(':quandF',$_POST['quandF']);
+                $plus->bindParam(':comment',$_POST['comment']);
+                $plus->bindParam(':pourquoi',$_POST['pourquoi']);
+                $plus->bindParam(':combien',$_POST['combien']);
+                $plus->execute();
+                print json_encode(['Enregistre' => true]);
+                
+            break;
+            case'read-tasklistt':
+                $tasklist=$conn->prepare('SELECT * FROM tasklist WHERE id_projet= :id AND id= :taskId');
+                $tasklist->execute(array(':id' => $_POST['id_projet'],':taskId' => $_POST['taskId']));
+                $tasklist=$tasklist-> fetchAll(PDO::FETCH_ASSOC);
+                print json_encode($tasklist);
+            break;
             case'create_priorite':
-                $action=$conn->prepare('INSERT INTO tableau_priorite (id_projet, task_id, urgent, important, priorite,statut, delai)VALUES (:id_projet, :task_id, :urgent, :important, :priorite,:statut, :delai) ');
+                $action=$conn->prepare('INSERT INTO tableau_priorite (id_projet, task_id, urgent, important, priorite,statut)VALUES (:id_projet, :task_id, :urgent, :important, :priorite,:statut) ');
                 $action->bindParam(':id_projet',$_POST['id_projet']);
                 $action->bindParam(':task_id',$_POST['task_id']);
                 $action->bindParam(':urgent',$_POST['urgent']);
                 $action->bindParam(':important',$_POST['important']);
                 $action->bindParam(':priorite',$_POST['priorite']);
                 $action->bindParam(':statut',$_POST['statut']);
-                $action->bindParam(':delai',$_POST['delai']);
                 $action->execute();
                 print json_encode(['Enregistre' => true]);
             break;
@@ -343,7 +378,7 @@
                 print json_encode($result);
             break;
             case 'read_apexresource':
-                $action = $conn->prepare('SELECT tasklists, quandD, quandF, id_task  FROM tasklist t JOIN tableau_action a ON t.id=a.id_task WHERE t.id_projet = :id_p');
+                $action = $conn->prepare('SELECT tasklists,qui, quandD, quandF, id_task  FROM tasklist t JOIN tableau_action a ON t.id=a.id_task WHERE t.id_projet = :id_p');
                 $action->execute(array(':id_p' => $_POST['id_p']));
                 $result = $action->fetchAll(PDO::FETCH_ASSOC);
                 print json_encode($result);
