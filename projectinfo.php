@@ -248,8 +248,8 @@
                 
             break;
             case'delete_humanresource':
-                $humanresource=$conn->prepare('DELETE FROM humanresource where id= :id');
-                $humanresource->bindParam('id',$_POST['id']);
+                $humanresource=$conn->prepare('DELETE FROM humanresource AND tableau_action where email= :email');
+                $humanresource->bindParam('email',$_POST['email']);
                 $humanresource->execute();
                 print json_encode(['Enregistre' => true]);
             break;
@@ -334,7 +334,7 @@
                 print json_encode($result);
             break;
             case'update_tableauaction':
-                $plus= $conn->prepare('UPDATE tableau_action SET qui=:qui, email=:email, ou=:ou, quandD=:quandD, quandF=:quandF, comment=:comment, pourquoi=:pourquoi, combien=:combien WHERE id=:id');
+                $plus= $conn->prepare('UPDATE tableau_action SET qui=:qui, email=:email, ou=:ou, quandD=:quandD, quandF=:quandF, comment=:comment, pourquoi=:pourquoi, combien=:combien WHERE id_task=:id' );
                 $plus->bindParam(':id',$_POST['id']);
                 $plus->bindParam(':qui',$_POST['qui']);
                 $plus->bindParam(':email',$_POST['email']);
@@ -344,6 +344,26 @@
                 $plus->bindParam(':comment',$_POST['comment']);
                 $plus->bindParam(':pourquoi',$_POST['pourquoi']);
                 $plus->bindParam(':combien',$_POST['combien']);
+                $plus->execute();
+                print json_encode(['Enregistre' => true]);
+                
+            break;
+            case'update_tableauactionm':
+                $plus= $conn->prepare('UPDATE tableau_action SET qui=:qui, email=:email,quandD=:quandD, quandF=:quandF WHERE id_task=:id' );
+                $plus->bindParam(':id',$_POST['id']);
+                $plus->bindParam(':qui',$_POST['qui']);
+                $plus->bindParam(':email',$_POST['email']);
+                $plus->bindParam(':quandD',$_POST['quandD']);
+                $plus->bindParam(':quandF',$_POST['quandF']);
+                $plus->execute();
+                print json_encode(['Enregistre' => true]);
+                
+            break;
+            case'update_tableauactionmm':
+                $plus= $conn->prepare('UPDATE tableau_action SET quandD=:quandD, quandF=:quandF WHERE id_task=:id' );
+                $plus->bindParam(':id',$_POST['id']);
+                $plus->bindParam(':quandD',$_POST['quandD']);
+                $plus->bindParam(':quandF',$_POST['quandF']);
                 $plus->execute();
                 print json_encode(['Enregistre' => true]);
                 

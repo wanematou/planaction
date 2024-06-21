@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@infectoone/vue-ganttastic": "^2.3.2"
+  }
+}
